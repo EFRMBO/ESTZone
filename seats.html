@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Игровые Места — ESTZone</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@400;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <header class="header">
+    <div class="container header__inner">
+      <a href="index.html" class="logo">EST<span>ZONE</span></a>
+      <button class="burger" id="burger" aria-label="Меню">
+        <span class="burger__line"></span>
+        <span class="burger__line"></span>
+        <span class="burger__line"></span>
+      </button>
+      <nav class="nav" id="nav">
+        <a href="index.html" class="nav__link">Главная</a>
+        <a href="tariffs.html" class="nav__link">Тарифы</a>
+        <a href="seats.html" class="nav__link active">Места</a>
+        <a href="contacts.html" class="nav__link">Контакты</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container page-padding">
+    <h1 class="page-title">МЕСТА ИГРОВОГО ЗАЛА</h1>
+    <p class="page-subtitle">Нажмите на место, чтобы его зарезервировать. Зелёный — свободно, красный — занято.</p>
+
+    <div class="seats-counter">Свободно мест: <span id="free-count">0</span></div>
+    <div class="seats-legend">
+      <div class="legend-item"><div class="legend-dot legend-dot--free"></div> Свободно</div>
+      <div class="legend-item"><div class="legend-dot legend-dot--busy"></div> Занято</div>
+    </div>
+
+    <div class="zone-section">
+      <h2 class="zone-title text-accent">🟢 Зона Standard</h2>
+      <div class="seats-grid">
+        <div class="seat seat--free">S-01</div>
+        <div class="seat seat--busy">S-02</div>
+        <div class="seat seat--free">S-03</div>
+        <div class="seat seat--free">S-04</div>
+      </div>
+    </div>
+
+    <div class="zone-section">
+      <h2 class="zone-title text-comfort">⚡ Зона Pro Comfort</h2>
+      <div class="seats-grid">
+        <div class="seat seat--free">C-01</div>
+        <div class="seat seat--free">C-02</div>
+        <div class="seat seat--busy">C-03</div>
+      </div>
+    </div>
+
+    <div class="zone-section">
+      <h2 class="zone-title text-vip">👑 Зона VIP Ultra</h2>
+      <div class="seats-grid">
+        <div class="seat seat--free">V-01</div>
+        <div class="seat seat--busy">V-02</div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer__inner">
+      <span class="logo">EST<span>ZONE</span></span>
+      <p class="footer__copy">© 2026 ESTZone.</p>
+    </div>
+  </footer>
+
+  <script>
+    
+    var burger = document.getElementById("burger");
+    var nav = document.getElementById("nav");
+
+    burger.addEventListener("click", function() {
+      burger.classList.toggle("open");
+      nav.classList.toggle("open");
+    });
+
+    nav.querySelectorAll(".nav__link").forEach(function(link) {
+      link.addEventListener("click", function() {
+        burger.classList.remove("open");
+        nav.classList.remove("open");
+      });
+    });
+
+
+    function updateCounter() {
+      var freeSeats = document.querySelectorAll(".seat--free");
+      document.getElementById("free-count").textContent = freeSeats.length;
+    }
+
+    var allSeats = document.querySelectorAll(".seat");
+
+    allSeats.forEach(function(seat) {
+      seat.addEventListener("click", function() {
+        var seatName = seat.textContent.trim();
+
+        if (seat.classList.contains("seat--free")) {
+          var answer = window.confirm("Место " + seatName + " свободно.\nЗарезервировать это место?");
+          if (answer === true) {
+            seat.classList.remove("seat--free");
+            seat.classList.add("seat--busy");
+            updateCounter();
+          }
+        } else {
+          window.alert("Место " + seatName + " сейчас занято.");
+        }
+      });
+    });
+
+
+    updateCounter();
+  </script>
+
+</body>
+</html>
